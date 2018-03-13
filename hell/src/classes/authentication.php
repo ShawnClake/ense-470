@@ -83,8 +83,10 @@ class authentication
         $sql = "SELECT * FROM `requests` WHERE `user_id`=". $_SESSION['user'];
         $result = $db->query($sql);
 
+
+
         if ($result->num_rows > 0) {
-            return $result->fetch_all();
+            return $result->fetch_all(MYSQLI_ASSOC);
         }
 
         return false;

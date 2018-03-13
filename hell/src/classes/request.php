@@ -27,6 +27,27 @@ class request
         }
     }
 
+    public static function getSoftwareWithID($id)
+    {
+        if(!isset($_SESSION['user']))
+            return false;
+
+        $db = DB::Instance()->conn;
+
+        $sql = "SELECT * FROM `software` WHERE `id`=$id";
+        $result = $db->query($sql);
+
+        $software = [];
+
+        while ($row = $result->fetch_assoc()) {
+            $software[] = $row;
+        }
+
+        if ($result->num_rows > 0) {
+            return $software;
+        }
+    }
+
     public static function submitRequest($software, $note)
     {
         if(!isset($_SESSION['user']))
@@ -59,6 +80,18 @@ class request
         }
 
 
+    }
+
+    public static function updateRequest($id, $status)
+    {
+        if(!isset($_SESSION['user']))
+            return false;
+
+        $db = DB::Instance()->conn;
+
+        $sql = "UPDATE `requests` SET `status`='$status' WHERE `id`='$id'";
+
+        mysqli_query($db, $sql);
     }
 	
 	

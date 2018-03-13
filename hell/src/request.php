@@ -3,6 +3,7 @@
 //error_reporting(E_ALL);
 include 'classes/db.php';
 include 'classes/request.php';
+include 'classes/authentication.php';
 
 session_start();
 
@@ -33,7 +34,7 @@ $software = request::getSoftware();
 <div class="container">
 
     <nav class="navbar navbar-light navbar-expand-lg" style="background-color:rgba(0,0,0,0.1);">
-        <a class="navbar-brand" href="#">
+        <a class="navbar-brand" href="index.php">
             <img src="/assets/brand/bootstrap-solid.svg" width="30" height="30" class="d-inline-block align-top" alt="">
             HELL
         </a>
@@ -44,7 +45,7 @@ $software = request::getSoftware();
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav">
                 <li class="nav-item active">
-                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    <a class="nav-link" href="index.php">Home <span class="sr-only">(current)</span></a>
                 </li>
                 <?php if(isset($_SESSION['user'])): ?>
                     <li class="nav-item">
@@ -55,7 +56,7 @@ $software = request::getSoftware();
                     </li>
                     <?php if(authentication::isApprover() || authentication::isAnalyst()): ?>
                         <li class="nav-item">
-                            <a class="nav-link" href="manage.php">Manage Requests <?php if(isset($pending) && $pending > 0): echo "<span style='color:#630000'>($pending)</span>"; endif; ?></a>
+                            <a class="nav-link" href="manage.php">Manage Requests <?php if(authentication::isApprover()) {$pending = count(authentication::getPendingApproverRequests());} if(isset($pending) && $pending > 0): echo "<div class='animated infinite bounce' style='color:#630000;display:inline;'>($pending)</div>"; endif; ?></a>
                         </li>
                     <?php endif; ?>
                     <li class="nav-item">
@@ -113,6 +114,9 @@ $software = request::getSoftware();
                 </div>
 
             </form>
+
+
+
         </div>
     </div>
 
