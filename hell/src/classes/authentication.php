@@ -39,6 +39,23 @@ class authentication
 
     }
 
+    public static function getUser($id)
+    {
+        if(!isset($_SESSION['user']))
+            return false;
+
+        $db = DB::Instance()->conn;
+
+        $sql = "SELECT * FROM `users` WHERE `id`=". $id;
+        $result = $db->query($sql);
+
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
+        }
+
+        return false;
+    }
+
     public static function isApprover()
     {
         if(!isset($_SESSION['user']))
@@ -183,17 +200,13 @@ class authentication
 
         $db = DB::Instance()->conn;
 
-        $sql = "SELECT * FROM `requests` WHERE `approver_id`=". $_SESSION['user'];
+        $sql = "SELECT * FROM `requests` WHERE `status`='APPROVED'";
         $result = $db->query($sql);
 
-        $requests = [];
-
-        while ($row = $result->fetch_assoc()) {
-            if($row['status'] == 'APPROVED')
-                $requests[] = $row;
+        if ($result->num_rows > 0) {
+            return $result->fetch_all(MYSQLI_ASSOC);
         }
 
-        return $requests;
     }
 
     public static function register($email, $password)

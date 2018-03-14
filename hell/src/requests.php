@@ -133,7 +133,7 @@ $myrequests = authentication::getMyRequests();
 
                     echo "<td>";
                     if($status == eRequestStatus::REQUIRE_EDIT)
-                        echo "<button type='button' class='btn btn-sm form-inline btn-primary' data-toggle='modal' data-target='#editRow'><i class='fas fa-pencil-alt'></i></button>";
+                        echo "<button type='button' class='btn btn-sm form-inline btn-primary open-editRow' data-toggle='modal' data-software='$software' data-note='$note' data-id='$id' data-target='#editRow'><i class='fas fa-pencil-alt'></i></button>";
 
                     if($status != eRequestStatus::REMOVED)
                         echo "<a href='remove_request.php?id=$id' data-toggle='tooltip' data-placement='right' title='Remove Request' class='btn btn-sm btn-danger form-inline' ><i class=\"fas fa-times\"></i></a>";
@@ -151,33 +151,39 @@ $myrequests = authentication::getMyRequests();
             <div class="modal fade" id="editRow" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Request</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
+                        <form id="edit" action="edit_request.php" method="post">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Request</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
 
-                            <div class="form-group">
-                                <label for="software">Software</label>
-                                <input type="text" class="form-control" id="software" name="software" value="the software" readonly>
+                                <div class="form-group">
+                                    <label for="software">Software</label>
+                                    <input type="text" class="form-control" id="software" name="software" value="the software" readonly>
+
+                                </div>
+                                <div class="form-group">
+                                    <label for="note">Note</label>
+                                    <input type="text" class="form-control" id="note" name="note" value="the note">
+                                </div>
+                                <div class="form-group">
+                                    <input type="hidden" class="form-control" id="id" name="id" value="">
+                                </div>
+
 
                             </div>
-                            <div class="form-group">
-                                <label for="note">Note</label>
-                                <input type="text" class="form-control" id="note" name="note" value="the note">
-                            </div>
-
-                        </div>
-                        <div class="modal-footer">
-                            <div class="form-group text-right">
-                                <div class="text-right" style="display:inline;">
-                                    <a href="requests.php" class="btn btn btn-danger form-inline">Cancel</a>
-                                    <button type="submit" class="btn btn-lg btn-success">Save</button>
+                            <div class="modal-footer">
+                                <div class="form-group text-right">
+                                    <div class="text-right" style="display:inline;">
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                        <button type="submit" class="btn btn-lg btn-success">Save</button>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -198,6 +204,34 @@ $myrequests = authentication::getMyRequests();
                             <p>Your request has been submitted</p>
                             <div style="font-size:8em;" class="text-center">
                             <span class="text-center"><i style="color:green;" class="fas fa-check-circle"></i></span>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group text-right">
+                                <div class="text-right" style="display:inline;">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="submitEdit" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Confirmation</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <p>Your request has been edited</p>
+                            <div style="font-size:8em;" class="text-center">
+                                <span class="text-center"><i style="color:green;" class="fas fa-check-circle"></i></span>
                             </div>
 
                         </div>
@@ -254,12 +288,6 @@ $myrequests = authentication::getMyRequests();
         return ( prop && prop in params ) ? params[ prop ] : params;
     }
 
-
-
-
-
-
-
     $(document).ready(function(){
         $('[data-toggle="tooltip"]').tooltip();
         $('#thedata').DataTable( {
@@ -270,6 +298,21 @@ $myrequests = authentication::getMyRequests();
         if(getUrlParams('s') === 'success')
             $('#submitRow').modal('show');
 
+        if(getUrlParams('s') === 'edit-success')
+            $('#submitEdit').modal('show');
+
+    });
+
+    $(document).on("click", ".open-editRow", function () {
+        var software = $(this).data('software');
+        var note = $(this).data('note');
+        var id = $(this).data('id');
+        $(".modal-body #software").val( software );
+        $(".modal-body #note").val( note );
+        $(".modal-body #id").val( id );
+        // As pointed out in comments,
+        // it is superfluous to have to manually call the modal.
+        // $('#addBookDialog').modal('show');
     });
 </script>
 

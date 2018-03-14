@@ -93,6 +93,48 @@ class request
 
         mysqli_query($db, $sql);
     }
+
+    public static function approverUpdateRequest($id, $status)
+    {
+        if(!isset($_SESSION['user']))
+            return false;
+
+        $db = DB::Instance()->conn;
+
+        $auid = $_SESSION['user'];
+
+        $sql = "UPDATE `requests` SET `status`='$status',`approver_id`='$auid' WHERE `id`='$id'";
+
+        mysqli_query($db, $sql);
+    }
+
+    public static function analystUpdateRequest($id)
+    {
+        if(!isset($_SESSION['user']))
+            return false;
+
+        $db = DB::Instance()->conn;
+
+        $auid = $_SESSION['user'];
+
+        $sql = "UPDATE `requests` SET `analyst_id`='$auid' WHERE `id`='$id'";
+
+        mysqli_query($db, $sql);
+    }
+
+    public static function updateRequestAndData($id, $data, $status)
+    {
+        if(!isset($_SESSION['user']))
+            return false;
+
+        $db = DB::Instance()->conn;
+
+        $data = json_encode($data);
+
+        $sql = "UPDATE `requests` SET `data`='$data', `status`='$status' WHERE `id`='$id'";
+
+        mysqli_query($db, $sql);
+    }
 	
 	
 
