@@ -17,8 +17,14 @@ class authentication
             $row = $result->fetch_assoc();
 
             if(password_verify($password, $row['password']))
+            {
                 $_SESSION['user'] = $row['id'];
+                return true;
+            }
+
         }
+
+        return false;
     }
 
 

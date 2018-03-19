@@ -116,6 +116,33 @@ $software = request::getSoftware();
             </form>
 
 
+            <div class="modal fade" id="formFail" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Failed</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+
+                            <p>Your request was not submitted as fields were filled out improperly</p>
+                            <div style="font-size:8em;" class="text-center">
+                                <span class="text-center"><i style="color:darkred;" class="fas fa-times"></i></span>
+                            </div>
+
+                        </div>
+                        <div class="modal-footer">
+                            <div class="form-group text-right">
+                                <div class="text-right" style="display:inline;">
+                                    <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
     </div>
@@ -127,6 +154,42 @@ $software = request::getSoftware();
         integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh"
         crossorigin="anonymous"></script>
 <script src="https://openrubicon.com/470/libs/js/bootstrap.min.js"></script>
+
+<script>
+
+
+    /**
+     * JavaScript Get URL Parameter
+     *
+     * Taken from Kevin Leary
+     * https://www.kevinleary.net/javascript-get-url-parameters/
+     *
+     * @param String prop The specific URL parameter you want to retreive the value for
+     * @return String|Object If prop is provided a string value is returned, otherwise an object of all properties is returned
+     */
+    function getUrlParams( prop ) {
+        var params = {};
+        var search = decodeURIComponent( window.location.href.slice( window.location.href.indexOf( '?' ) + 1 ) );
+        var definitions = search.split( '&' );
+
+        definitions.forEach( function( val, key ) {
+            var parts = val.split( '=', 2 );
+            params[ parts[ 0 ] ] = parts[ 1 ];
+        } );
+
+        return ( prop && prop in params ) ? params[ prop ] : params;
+    }
+
+    $(document).ready(function(){
+
+        if(getUrlParams('s') === 'formfail')
+            $('#formFail').modal('show');
+
+
+    });
+
+</script>
+
 </body>
 </html>
 
