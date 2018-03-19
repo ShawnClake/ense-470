@@ -110,9 +110,9 @@ if(authentication::isApprover())
 </div>
 
 <div class="container">
-    <div class="jumbotron jumbotron-fluid text-center" style="height:200px;background-color:rgba(0,0,0,0);">
+    <div class="jumbotron jumbotron-fluid text-center" style="background-color:rgba(0,0,0,0);">
         <!---background-color:#E3CCCC">-->
-        <div class="container animated infinite pulse">
+        <div class="container">
             <h1 class="display-3">HELL's Tech Support</h1>
             <?php if(!isset($_SESSION['user'])): ?>
                 <p class="lead">Come, try our software.</p>
@@ -162,7 +162,7 @@ if(authentication::isApprover())
 
             <div style="padding:15px;">
                 <div class="card" style="padding:10px;background-color:rgba(255,255,255,0.2);">
-                    <img class="card-img-top" src="http://openrubicon.com/470/assets/chewwy.jpg" alt="Card image cap">
+                    <img class="card-img-top" src="http://144.217.7.184/assets/chewwy.jpg" alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">Dr. Jed I. Knight</h5>
                         <p class="card-text">Hey, never be afraid to come by and talk about your software requests. I
@@ -173,10 +173,31 @@ if(authentication::isApprover())
         </div>
 
         <div class="col-sm">
-            <h5>Latest Software</h5>
+            <h5 class="text-center">Latest Software</h5>
+
+            <div style="padding:15px;">
+                <div class="card" style="padding:10px;background-color:rgba(255,255,255,0.2);">
+                    <img class="card-img-top" src="http://144.217.7.184/assets/needle.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">Surgical Information System</h5>
+                        <p class="card-text">Surgical Information System (SIS) helps doctors and patients alike learn more information about surgeries.</p>
+                    </div>
+                </div>
+            </div>
         </div>
+
         <div class="col-sm">
-            <h5>Your Neighborhood IT</h5>
+            <h5 class="text-center">Your Neighborhood IT</h5>
+
+            <div style="padding:15px;">
+                <div class="card" style="padding:10px;background-color:rgba(255,255,255,0.2);">
+                    <img class="card-img-top" src="http://144.217.7.184/assets/usersicon.png" alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">TBA</h5>
+                        <p class="card-text">Currently, HELL's Tech Support doesn't have the funding to hire a dedicated guy. There's not much money here in HELL..</p>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
