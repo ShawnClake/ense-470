@@ -3,6 +3,7 @@
 session_start();
 
 require_once 'db.php';
+require_once 'mail.php';
 
 class request
 {
@@ -120,6 +121,26 @@ class request
         $sql = "UPDATE `requests` SET `analyst_id`='$auid' WHERE `id`='$id'";
 
         mysqli_query($db, $sql);
+
+        $sql2 = "SELECT * FROM `requests` WHERE `id`='$id'";
+        $result2 = $db->query($sql2);
+
+        if ($result2->num_rows == 1) {
+            $row2 = $result2->fetch_assoc();
+            $uid = $row2['user_id'];
+            $sql3 = "SELECT * FROM `users` WHERE `id`='$uid'";
+            $result3 = $db->query($sql3);
+            if ($result3->num_rows == 1) {
+                $row3 = $result3->fetch_assoc();
+
+                Mail::send($row3['email'], 'Your request has been implemented', 'You are receiving this message to notify you that a recent software request has been approved.');
+            }
+
+        }
+
+
+
+
     }
 
     public static function updateRequestAndData($id, $data, $status)

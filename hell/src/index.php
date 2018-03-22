@@ -30,6 +30,7 @@ if(authentication::isApprover())
     $pending = count(authentication::getPendingApproverRequests());
 }
 
+//echo password_hash("test123", PASSWORD_DEFAULT);
 
 //while ($row = $result->fetch_assoc()) {
 
